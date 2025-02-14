@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한글 Lorem Ipsum 생성기</title>
+  <style>
+    /* 전체 페이지 스타일 */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* 카드형 컨테이너 */
+    .container {
+      width: 90%;
+      max-width: 600px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    /* 제목 */
+    h1 {
+      color: #2c3e50;
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    /* 입력창 & 버튼 */
+    .input-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+      text-align: center;
+      transition: 0.3s ease-in-out;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #2ecc71;
+      box-shadow: 0 0 8px rgba(46, 204, 113, 0.5);
+    }
+
+    button {
+      width: 100%;
+      max-width: 300px;
+      background-color: #2ecc71;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #27ae60;
+      transform: scale(1.05);
+    }
+
+    /* 결과 컨테이너 */
+    .output-container {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-size: 16px;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      resize: none;
+      overflow-y: auto;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      background: #ffffff;
+      box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.05);
+      box-sizing: border-box;
+    }
+
+    /* 복사하기 버튼 */
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    .copy-btn:hover {
+      background: #2980b9;
+    }
+
+    /* 디폴트 안내 메시지 스타일 */
+    .placeholder-text {
+      font-size: 14px;
+      color: #777;
+      text-align: center;
+      padding: 10px;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 480px) {
+      .container {
+        width: 95%;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      input, button {
+        font-size: 14px;
+        padding: 12px;
+      }
+
+      textarea {
+        font-size: 14px;
+        height: 180px;
+      }
+
+      .copy-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>한글 Lorem Ipsum 생성기</h1>
+    <div class="input-group">
+      <label for="charCount">생성할 텍스트의 글자 수 입력:</label>
+      <input type="number" id="charCount" min="1" placeholder="예: 100">
+      <button id="generateBtn" onclick="generateText()">생성하기</button>
+    </div>
+
+    <div class="output-container">
+      <button class="copy-btn" onclick="copyText()">복사하기</button>
+      <h2>생성된 텍스트:</h2>
+      <div class="placeholder-text" id="placeholder">숫자를 입력하면 애자일에 대한 내용으로 로렌입숨(Rorem Ipsum)을 만들어줍니다.</div>
+      <textarea id="output" readonly></textarea>
+    </div>
+  </div>
+
+  <script>
+    const sampleText = "애자일 소프트웨어 개발은 반복적이며 점진적인 접근 방식을 기반으로 합니다. 고객의 요구사항을 유연하게 수용하고 빠르게 변화에 대응하는 것이 특징입니다. 스크럼, XP, 칸반 등 다양한 애자일 방법론이 존재합니다.";
+
+    function generateText() {
+      const charCount = document.getElementById('charCount').value;
+      const outputField = document.getElementById('output');
+      const placeholder = document.getElementById('placeholder');
+
+      if (charCount < 1) {
+        alert("1 이상의 숫자를 입력해주세요.");
+        return;
+      }
+
+      let result = "";
+      while (result.length < charCount) {
+        const remainingChars = charCount - result.length;
+        result += sampleText.substring(0, remainingChars);
+      }
+
+      outputField.value = result;
+      placeholder.style.display = "none"; // 기본 메시지 숨김
+    }
+
+    // 복사하기 기능
+    function copyText() {
+      const outputField = document.getElementById('output');
+      outputField.select();
+      document.execCommand("copy");
+      alert("텍스트가 복사되었습니다!");
+    }
+
+    // 엔터 키 입력 시 자동으로 생성 버튼 클릭
+    document.getElementById("charCount").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // 기본 동작 방지
+        generateText();
+      }
+    });
+  </script>
+
+</body>
+</html>
