@@ -1,12 +1,2 @@
-[[redirects]]
 from = "/"
-<<<<<<< HEAD
-to = "/index_04_ui_copy_updated.html"
-=======
-<<<<<<< HEAD
-to = "/index_04_ui_copy_updated.html"
-=======
-to = "/index_05_ui_mobileweb_ux_updated.html"
->>>>>>> develop
->>>>>>> release
-status = 200
+to = "/index_05_ui_mobileweb_ux_updated.html"  # or 원하는 경로로 수정
