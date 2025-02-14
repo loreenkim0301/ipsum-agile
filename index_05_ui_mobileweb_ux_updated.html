@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한글 Lorem Ipsum 생성기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .generated-text {
+            white-space: normal !important;
+            overflow: visible !important;
+            text-overflow: unset !important;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>한글 Lorem Ipsum 생성기</h1>
+        <input type="number" id="charCount" placeholder="예: 100" onkeypress="handleKeyPress(event)">
+        <button id="generateBtn" onclick="generateText()">생성하기</button>
+        <div id="result" class="generated-text">여기에 생성된 텍스트가 표시됩니다.</div>
+    </div>
+
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("generateBtn").click();
+            }
+        }
+
+        function generateText() {
+            const charCount = document.getElementById("charCount").value || 100;
+            const loremText = "애자일 소프트웨어 개발은 반복적이며 점진적인 접근 방식을 기반으로 합니다. 고객의 요구사항을 유연하게 수용하고 빠르게 변화에 대응하는 것이 특징입니다. 스크럼, XP, 칸반 등 다양한 애자일 방법론이 존재합니다.";
+            
+            let resultText = "";
+            while (resultText.length < charCount) {
+                resultText += loremText + " ";
+            }
+            document.getElementById("result").innerText = resultText.substring(0, charCount);
+        }
+    </script>
+</body>
+</html>
