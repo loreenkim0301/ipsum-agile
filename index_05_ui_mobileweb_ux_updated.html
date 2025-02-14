@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>한글 Lorem Ipsum 생성기</title>
+    <title>ipsum-agile : 로렌입숨 애자일 (한국어)</title>
+    
     <style>
+        /* 🌟 전체 페이지 스타일 */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
         }
+
+        /* 🌟 콘텐츠 박스 스타일 */
         .container {
             max-width: 500px;
             margin: auto;
@@ -17,12 +21,16 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        /* 🌟 입력 필드 스타일 */
         input {
             width: 80%;
             padding: 10px;
             font-size: 16px;
             margin-bottom: 10px;
         }
+
+        /* 🌟 버튼 스타일 */
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -31,36 +39,57 @@
             border: none;
             cursor: pointer;
         }
+
+        /* 🌟 생성된 텍스트 표시 영역 스타일 */
         .generated-text {
-            white-space: normal !important;
-            overflow: visible !important;
-            text-overflow: unset !important;
+            width: 100%;
+            min-height: 50px;
+            max-height: 500px;
+            overflow-y: auto;
             word-wrap: break-word;
-            overflow-wrap: break-word;
-            max-width: 100%;
+            word-break: break-word;
             background: #f8f8f8;
             padding: 10px;
             border-radius: 5px;
             margin-top: 10px;
+            resize: none;
+            font-size: 14px;
+        }
+
+        /* 🌟 모바일 환경에서 UI 최적화 */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+            input, button {
+                width: 100%;
+                font-size: 14px;
+                padding: 12px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>한글 Lorem Ipsum 생성기</h1>
-        <input type="number" id="charCount" placeholder="예: 100" onkeypress="handleKeyPress(event)">
+        <h1>ipsum-agile : 로렌입숨 애자일 (한국어)</h1>
+        
+        <!-- 🌟 사용자가 글자 수를 입력하는 입력 필드 -->
+        <input type="number" id="charCount" placeholder="예: 100" enterkeyhint="done">
+        
+        <!-- 🌟 사용자가 클릭하면 텍스트를 생성하는 버튼 -->
         <button id="generateBtn" onclick="generateText()">생성하기</button>
-        <div id="result" class="generated-text">여기에 생성된 텍스트가 표시됩니다.</div>
+        
+        <!-- 🌟 생성된 텍스트를 표시하는 텍스트 박스 -->
+        <textarea id="result" class="generated-text" readonly></textarea>
     </div>
 
     <script>
-        function handleKeyPress(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                document.getElementById("generateBtn").click();
-            }
-        }
-
+        /**
+         * 🌟 Lorem Ipsum 텍스트를 생성하는 함수
+         * - 사용자가 입력한 글자 수만큼 텍스트를 생성
+         * - 입력한 글자 수가 부족하면 반복해서 추가
+         */
         function generateText() {
             const charCount = document.getElementById("charCount").value || 100;
             const loremText = "애자일 소프트웨어 개발은 반복적이며 점진적인 접근 방식을 기반으로 합니다. 고객의 요구사항을 유연하게 수용하고 빠르게 변화에 대응하는 것이 특징입니다. 스크럼, XP, 칸반 등 다양한 애자일 방법론이 존재합니다.";
@@ -69,7 +98,19 @@
             while (resultText.length < charCount) {
                 resultText += loremText + " ";
             }
-            document.getElementById("result").innerText = resultText.substring(0, charCount);
+
+            const resultField = document.getElementById("result");
+            resultField.value = resultText.substring(0, charCount);
+            adjustHeight();
+        }
+
+        /**
+         * 🌟 텍스트 박스의 높이를 자동으로 조절하는 함수
+         */
+        function adjustHeight() {
+            const resultField = document.getElementById("result");
+            resultField.style.height = "auto";
+            resultField.style.height = (resultField.scrollHeight) + "px";
         }
     </script>
 </body>
