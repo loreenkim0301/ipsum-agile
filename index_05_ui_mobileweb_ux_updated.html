@@ -3,114 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ipsum-agile : 로렌입숨 애자일 (한국어)</title>
-    
+    <title>로렌입숨 애자일 - 한글 Lorem Ipsum 생성기</title>
     <style>
-        /* 🌟 전체 페이지 스타일 */
+        /* 전체 페이지 스타일 */
         body {
             font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
             text-align: center;
-            margin: 20px;
+            margin: 0;
+            padding: 20px;
         }
 
-        /* 🌟 콘텐츠 박스 스타일 */
+        /* 컨테이너 스타일 */
         .container {
-            max-width: 500px;
+            max-width: 600px;
             margin: auto;
             padding: 20px;
+            background: white;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* 🌟 입력 필드 스타일 */
+        /* 설명 텍스트 스타일 */
+        .description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* 입력 필드 스타일 */
         input {
             width: 80%;
             padding: 10px;
             font-size: 16px;
             margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
         }
 
-        /* 🌟 버튼 스타일 */
+        /* 버튼 스타일 */
         button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
-            background-color: green;
+            background-color: #007bff;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+            margin: 5px;
         }
 
-        /* 🌟 생성된 텍스트 표시 영역 스타일 */
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 생성된 텍스트 박스 */
         .generated-text {
-            width: 100%;
-            min-height: 50px;
-            max-height: 500px;
-            overflow-y: auto;
+            white-space: pre-wrap;
             word-wrap: break-word;
-            word-break: break-word;
             background: #f8f8f8;
             padding: 10px;
             border-radius: 5px;
             margin-top: 10px;
-            resize: none;
+            text-align: left;
             font-size: 14px;
         }
 
-        /* 🌟 모바일 환경에서 UI 최적화 */
-        @media (max-width: 768px) {
-            .container {
-                width: 90%;
-                padding: 15px;
-            }
-            input, button {
+        /* 반응형 스타일 */
+        @media (max-width: 600px) {
+            input {
                 width: 100%;
-                font-size: 14px;
-                padding: 12px;
+            }
+            button {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ipsum-agile : 로렌입숨 애자일 (한국어)</h1>
-        
-        <!-- 🌟 사용자가 글자 수를 입력하는 입력 필드 -->
-        <input type="number" id="charCount" placeholder="예: 100" enterkeyhint="done">
-        
-        <!-- 🌟 사용자가 클릭하면 텍스트를 생성하는 버튼 -->
+        <h1>로렌입숨 애자일</h1>
+        <p class="description">필요한 글자 수를 입력하고 생성하기 버튼을 누르세요.</p>
+        <input type="number" id="charCount" placeholder="예: 100" onkeypress="handleKeyPress(event)">
         <button id="generateBtn" onclick="generateText()">생성하기</button>
-        
-        <!-- 🌟 생성된 텍스트를 표시하는 텍스트 박스 -->
-        <textarea id="result" class="generated-text" readonly></textarea>
+        <button id="copyBtn" onclick="copyText()">복사하기</button>
+        <div id="result" class="generated-text">여기에 생성된 텍스트가 표시됩니다.</div>
     </div>
 
     <script>
-        /**
-         * 🌟 Lorem Ipsum 텍스트를 생성하는 함수
-         * - 사용자가 입력한 글자 수만큼 텍스트를 생성
-         * - 입력한 글자 수가 부족하면 반복해서 추가
-         */
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("generateBtn").click();
+            }
+        }
+
         function generateText() {
             const charCount = document.getElementById("charCount").value || 100;
             const loremText = "애자일 소프트웨어 개발은 반복적이며 점진적인 접근 방식을 기반으로 합니다. 고객의 요구사항을 유연하게 수용하고 빠르게 변화에 대응하는 것이 특징입니다. 스크럼, XP, 칸반 등 다양한 애자일 방법론이 존재합니다.";
-            
+
             let resultText = "";
             while (resultText.length < charCount) {
                 resultText += loremText + " ";
             }
-
-            const resultField = document.getElementById("result");
-            resultField.value = resultText.substring(0, charCount);
-            adjustHeight();
+            document.getElementById("result").innerText = resultText.substring(0, charCount);
         }
 
-        /**
-         * 🌟 텍스트 박스의 높이를 자동으로 조절하는 함수
-         */
-        function adjustHeight() {
-            const resultField = document.getElementById("result");
-            resultField.style.height = "auto";
-            resultField.style.height = (resultField.scrollHeight) + "px";
+        function copyText() {
+            const text = document.getElementById("result").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("복사되었습니다!");
+            }).catch(err => {
+                alert("복사 실패: " + err);
+            });
         }
     </script>
 </body>
